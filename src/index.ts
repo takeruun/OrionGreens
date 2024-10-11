@@ -93,7 +93,9 @@ const checkHavingSoloPlan = async (elements: Locator[]): Promise<boolean> => {
       continue;
     }
 
+    // 繊維するまで待つ
     await page.goto(url);
+    await page.waitForTimeout(2000);
 
     await page.getByRole('button', { name: '人予約' }).click();
 
