@@ -9,12 +9,15 @@ on:
       areaCode:
         description: Query parameter areaCode for GoraGolfCourseSearch API
         required: false
+      isRecordVideo:
+        description: Record video or not
+        required: false
     
 jobs:
   run:
     runs-on: ubuntu-latest
     env:
-      IS_RECORD_VIDEO: false
+      IS_RECORD_VIDEO: ${{ inputs.isRecordVideo }}
       IS_HEADLESS: true
       RAKUTEN_APPLICATION_ID: ${{ secrets.RAKUTEN_APPLICATION_ID }}
       RAKUTEN_AFFILIATE_ID: ${{ secrets.RAKUTEN_AFFILIATE_ID }}
