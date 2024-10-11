@@ -16,6 +16,8 @@ jobs:
     env:
       IS_RECORD_VIDEO: false
       IS_HEADLESS: true
+      RAKUTEN_APPLICATION_ID: ${{ secrets.RAKUTEN_APPLICATION_ID }}
+      RAKUTEN_AFFILIATE_ID: ${{ secrets.RAKUTEN_AFFILIATE_ID }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
