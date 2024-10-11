@@ -41,6 +41,15 @@ const checkHavingSoloPlan = async (elements: Locator[]): Promise<boolean> => {
 };
 
 (async () => {
+  // yarn run の引数を受け取る
+  const args = process.argv.slice(2);
+
+  const hitsArg = args.find((arg) => arg.startsWith('--hits='));
+  const hits = hitsArg ? Number(hitsArg.split('=')[1]) : undefined;
+
+  const areaCodeArg = args.find((arg) => arg.startsWith('--areaCode='));
+  const areaCode = areaCodeArg ? Number(areaCodeArg.split('=')[1]) : undefined;
+
   // Setup
   const browser = await chromium.launch({
     headless: isHeadless,
@@ -70,7 +79,8 @@ const checkHavingSoloPlan = async (elements: Locator[]): Promise<boolean> => {
     affiliateId: process.env.RAKUTEN_AFFILIATE_ID || '',
     format: 'json',
     formatVersion: '2',
-    hits: 2,
+    hits,
+    areaCode,
   };
 
   const res = await client.Gora.GoraGolfCourseSearch.$20170623.get({
