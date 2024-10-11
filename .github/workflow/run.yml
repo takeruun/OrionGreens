@@ -1,0 +1,25 @@
+name: Run script
+
+on:
+  workflow_dispatch:
+    inputs:
+      hits:
+        description: Query parameter hits for GoraGolfCourseSearch API
+        required: false
+      areaCode:
+        description: Query parameter areaCode for GoraGolfCourseSearch API
+        required: false
+    
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Run script
+        environment:
+          IS_RECORD_VIDEO: false
+          IS_HEADLESS: true
+        run: |
+          yarn start --hits=${{ github.event.inputs.hits }} --areaCode=${{ github.event.inputs.areaCode }}
