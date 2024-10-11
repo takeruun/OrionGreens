@@ -1,0 +1,36 @@
+{
+  "name": "orion-greens",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "lint": "eslint .",
+    "format": "prettier . --write --ignore-path .prettierignore",
+    "fix": "yarn lint --fix && yarn format --loglevel error",
+    "build": "rm -rf dist && tsc",
+    "generate": "rm -rf src/api && yarn openapi2aspida -i=openapi/rakuten.yml -o=src/api/rakuten.ts",
+    "start": "ts-node src/index.ts"
+  },
+  "dependencies": {
+    "@aspida/axios": "^1.14.0",
+    "axios": "^1.7.7",
+    "dotenv": "^16.4.5",
+    "playwright": "^1.47.2"
+  },
+  "volta": {
+    "node": "20.16.0",
+    "yarn": "1.22.19"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.12.0",
+    "@types/node": "^20.14.12",
+    "@typescript-eslint/eslint-plugin": "^8.8.0",
+    "@typescript-eslint/parser": "^8.8.0",
+    "eslint": "^9.12.0",
+    "eslint-plugin-simple-import-sort": "^12.1.1",
+    "openapi2aspida": "^0.24.0",
+    "prettier": "^3.3.3",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.4",
+    "typescript-eslint": "^8.8.0"
+  }
+}

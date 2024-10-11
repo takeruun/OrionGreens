@@ -1,0 +1,115 @@
+openapi: 3.0.0
+info:
+  title: Rakuten Web Service APIs
+  version: 1.0.0
+servers:
+  - url: https://app.rakuten.co.jp/services/api/
+paths:
+  /Gora/GoraGolfCourseSearch/20170623:
+    get:
+      summary: 楽天GORAゴルフ場検索API (version:2017-06-23)
+      description: 楽天GORAゴルフ場検索APIは、 楽天GORAのゴルフ場をキーワード、エリア、緯度経度などで検索し、ゴルフ場情報を取得することが可能なAPIです。
+      operationId: get_golf_course
+      parameters:
+        - name: applicationId
+          in: query
+          required: true
+          description: アプリケーションID
+          schema:
+            type: string
+        - name: affiliateId
+          in: query
+          description: アフィリエイトID
+          required: false
+          schema:
+            type: string
+        - name: format
+          in: query
+          description: レスポンス形式
+          required: false
+          schema:
+            type: string
+            default: json
+        - name: keyword
+          in: query
+          description: キーワード
+          required: false
+          schema:
+            type: string
+        - name: areaCode
+          in: query
+          description: エリアコード
+          required: false
+          schema:
+            type: integer
+        - name: latitude
+          in: query
+          description: 緯度
+          required: false
+          schema:
+            type: integer
+            format: float
+        - name: longitude
+          in: query
+          description: 経度
+          required: false
+          schema:
+            type: integer
+            format: float
+        - name: formatVersion
+          in: query
+          description: レスポンスバージョン
+          required: false
+          schema:
+            type: string
+            default: 2
+        - name: hits
+          in: query
+          description: 1ページあたりの取得件数
+          required: false
+          schema:
+            type: integer
+            default: 30
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GolfCourseResponse'
+components:
+  schemas:
+    GolfCourseResponse:
+      type: object
+      properties:
+        count:
+          type: integer
+        page:
+          type: integer
+        first:
+          type: integer
+        last:
+          type: integer
+        hits:
+          type: integer
+        carrier:
+          type: integer
+        pageCount:
+          type: integer
+        Items:
+          type: array
+          items:
+            $ref: '#/components/schemas/GolfCourse'
+    GolfCourse:
+      type: object
+      properties:
+        golfCourseId:
+          type: string
+        golfCourseName:
+          type: string
+        golfCourseNameKana:
+          type: string
+        golfCourseCaption:
+          type: string
+        golfCourseDetailUrl:
+          type: string
