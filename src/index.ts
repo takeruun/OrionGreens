@@ -65,7 +65,7 @@ const checkHavingSoloPlan = async (elements: Locator[]): Promise<boolean> => {
     viewport: { width: 1920, height: 1080 },
     recordVideo: isRecordVideo
       ? {
-          dir: 'videos',
+          dir: __dirname + '/../videos',
         }
       : undefined,
   });
