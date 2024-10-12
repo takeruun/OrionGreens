@@ -1,7 +1,7 @@
 import 'dotenv/config';
 
 import axiosClient from '@aspida/axios';
-import { chromium, Locator } from 'playwright';
+import { firefox, Locator } from 'playwright';
 
 import api from './api/rakuten.ts/$api';
 import { Methods } from './api/rakuten.ts/Gora/GoraGolfCourseSearch/20170623';
@@ -51,7 +51,7 @@ const checkHavingSoloPlan = async (elements: Locator[]): Promise<boolean> => {
   const areaCode = areaCodeArg ? Number(areaCodeArg.split('=')[1]) : undefined;
 
   // Setup
-  const browser = await chromium.launch({
+  const browser = await firefox.launch({
     headless: isHeadless,
     args: [
       '--lang=ja',
@@ -96,14 +96,11 @@ const checkHavingSoloPlan = async (elements: Locator[]): Promise<boolean> => {
     await page.goto(url);
     await page.waitForTimeout(2000);
 
-    await page.screenshot({
-      path: 'videos/screenshot.png',
-    });
     // 利用規約が表示されたら
     if (await page.isVisible('text=Thank you for using Rakuten')) {
-      const element = page.getByText('1. Please arrive at least 30');
-      // element 要素の下までスクロール
-      await element.scrollIntoViewIfNeeded();
+      page.getByText('1. Please arrive at least 30').evaluate((node) => {
+        node.scrollTop = node.scrollHeight;
+      });
 
       await page.getByText('I have read, understand, and').click();
       await page.getByRole('button', { name: 'I Agree' }).click();
