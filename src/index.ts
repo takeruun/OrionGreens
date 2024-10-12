@@ -93,9 +93,21 @@ const checkHavingSoloPlan = async (elements: Locator[]): Promise<boolean> => {
       continue;
     }
 
-    // 繊維するまで待つ
     await page.goto(url);
     await page.waitForTimeout(2000);
+
+    await page.screenshot({
+      path: 'videos/screenshot.png',
+    });
+    // 利用規約が表示されたら
+    if (await page.isVisible('text=Thank you for using Rakuten')) {
+      const element = page.getByText('1. Please arrive at least 30');
+      // element 要素の下までスクロール
+      await element.scrollIntoViewIfNeeded();
+
+      await page.getByText('I have read, understand, and').click();
+      await page.getByRole('button', { name: 'I Agree' }).click();
+    }
 
     await page.getByRole('button', { name: '人予約' }).click();
 
